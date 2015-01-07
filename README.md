@@ -1,4 +1,4 @@
-# frp-raf
+# frp-tick
 
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
@@ -6,8 +6,19 @@ A function which will return an Event. The event will fire when requestAnimation
 
 ## Usage
 
-[![NPM](https://nodei.co/npm/frp-raf.png)](https://www.npmjs.com/package/frp-raf)
+[![NPM](https://nodei.co/npm/frp-tick.png)](https://www.npmjs.com/package/frp-raf)
+
+## Example
+
+```javascript
+var tick = require( 'frp-tick' );
+
+tick().watch( function( elapsed ) {
+	
+	console.log( elapsed );
+});
+```
 
 ## License
 
-MIT, see [LICENSE.md](http://github.com/jam3/frp-raf/blob/master/LICENSE.md) for details.
+MIT, see [LICENSE.md](http://github.com/jam3/frp-raf/blob/master/LICENSE) for details.
