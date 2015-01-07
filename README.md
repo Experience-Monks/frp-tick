@@ -6,7 +6,7 @@ A function which will return an Event. The event will fire when requestAnimation
 
 ## Usage
 
-[![NPM](https://nodei.co/npm/frp-tick.png)](https://www.npmjs.com/package/frp-raf)
+[![NPM](https://nodei.co/npm/frp-tick.png)](https://www.npmjs.com/package/frp-tick)
 
 ## Example
 
