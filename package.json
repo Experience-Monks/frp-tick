@@ -1,0 +1,32 @@
+{
+  "name": "frp-tick",
+  "version": "1.0.0",
+  "description": "will return an Event. The event will fire when requestAnimationFrame evaluates. The event will return the difference in milliseconds since the last call.",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Mikko Haapoja",
+    "email": "me@mikkoh.com",
+    "url": "https://github.com/mikkoh"
+  },
+  "dependencies": {
+    "frp": "^0.2.4",
+    "prova": "^2.1.1",
+    "raf": "^2.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "frp,functional,reactive,requestanimationframe,raf"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jam3/frp-tick.git"
+  },
+  "homepage": "https://github.com/jam3/frp-tick",
+  "bugs": {
+    "url": "https://github.com/jam3/frp-tick/issues"
+  }
+}
