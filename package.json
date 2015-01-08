@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "frp": "^0.2.4",
-    "prova": "^2.1.1",
-    "raf": "^2.0.4"
+    "raf": "^2.0.4",
+    "right-now": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tape": "^3.0.3"
+  },
   "scripts": {
-    "test": "node test.js"
+    "test": "node test/"
   },
   "keywords": [
     "frp,functional,reactive,requestanimationframe,raf"

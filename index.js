@@ -1,23 +1,47 @@
 var frp = require( 'frp' ),
-	raf = require( 'raf' );
+	raf = require( 'raf' ),
+	now = require( 'right-now' );
 
-module.exports = function() {
+var rafPipe = frp.event.pipe(),
+	timeLast = now(),
+	rafHandle = null;
 
-	var rafPipe = frp.event.pipe(),
-		timeLast = Date.now();
+function rafLoop() {
 
-	var rafLoop = function() {
+	var timeNow = now();
 
-		var timeNow = Date.now();
+	rafPipe.fire( timeNow -  timeLast );
 
-		rafPipe.fire( timeNow -  timeLast );
+	timeLast = timeNow;
 
-		timeLast = timeNow;
+	if( rafHandle !== null ) {
 
-		raf( rafLoop );
-	};
+		rafHandle = raf( rafLoop );
+	}
+}
 
-	rafLoop();
+function frpTick() {
 
 	return rafPipe;
+}
+
+frpTick.start = function() {
+
+	if( rafHandle === null ) {
+
+		rafHandle = raf( rafLoop );
+	}
 };
+
+frpTick.stop = function() {
+
+	if( rafHandle !== null ) {
+
+		raf.cancel( rafHandle );
+		rafHandle = null;
+	}
+};
+
+frpTick.start();
+
+module.exports = frpTick;
