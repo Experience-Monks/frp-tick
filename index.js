@@ -22,7 +22,7 @@ function rafLoop() {
 
 function frpTick() {
 
-	return rafPipe;
+	return rafPipe.event;
 }
 
 frpTick.start = function() {
