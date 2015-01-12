@@ -1,47 +1,69 @@
 var frp = require( 'frp' ),
-	raf = require( 'raf' ),
-	now = require( 'right-now' );
+		raf = require( 'raf' ),
+		now = require( 'right-now' ),
+		lookups = require( 'lookups' );
 
-var rafPipe = frp.event.pipe(),
-	timeLast = now(),
-	rafHandle = null;
-
-function rafLoop() {
-
-	var timeNow = now();
-
-	rafPipe.fire( timeNow -  timeLast );
-
-	timeLast = timeNow;
-
-	if( rafHandle !== null ) {
-
-		rafHandle = raf( rafLoop );
-	}
-}
+var pipeToRafLoop = lookups();
 
 function frpTick() {
 
-	return rafPipe.event;
+	var rafPipe = frp.event.pipe(),
+			timeLast = now();
+
+	var rafLoop = function() {
+
+		var timeNow = now();
+
+		rafPipe.fire( timeNow -  timeLast );
+
+		timeLast = timeNow;
+
+		if( rafLoop.handle !== null ) {
+
+			rafLoop.handle = raf( rafLoop );
+		}
+	};
+
+	rafLoop();
+
+	pipeToRafLoop.set( rafPipe, rafLoop );
+
+	return rafPipe;
 }
 
-frpTick.start = function() {
+frpTick.start = function( event ) {
 
-	if( rafHandle === null ) {
+	var loopFunc = pipeToRafLoop.get( event ),
+			started = loopFunc && loopFunc.handle === null;
 
-		rafHandle = raf( rafLoop );
+	if( started ) {
+
+		loopFunc();
 	}
+
+	return started;
 };
 
-frpTick.stop = function() {
+frpTick.stop = function( event ) {
 
-	if( rafHandle !== null ) {
+	var loopFunc = pipeToRafLoop.get( event ),
+			stopped = loopFunc && loopFunc.handle !== null;
 
-		raf.cancel( rafHandle );
-		rafHandle = null;
+	if( stopped ) {
+
+		raf.cancel( loopFunc.handle );
+		loopFunc.handle = null;	
 	}
+
+	return stopped;
 };
 
-frpTick.start();
+frpTick.kill = function( event ) {
+
+	frpTick.stop( event );
+	pipeToRafLoop.remove( event );
+};
+
+
 
 module.exports = frpTick;

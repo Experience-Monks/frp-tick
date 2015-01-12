@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "frp": "^0.2.4",
+    "lookups": "^1.0.0",
     "raf": "^2.0.4",
     "right-now": "^1.0.0"
   },

@@ -1,17 +1,17 @@
 var test = require( 'tape' );
 var tick = require( './..' );
 
-test( 'tick returns a value in milliseconds', function( t ) {
+test( 'tick', function( t ) {
 
-	t.plan( 3 );
+	t.plan( 4 );
 
 	var ticker = tick();
 	var cb = function( value ) {
 
-		t.ok( typeof value == 'number', 'value returned was a number' );	
+		t.equal( typeof value, 'number', 'value returned was a number' );	
 
 		ticker.unwatch( cb );
-		tick.stop();
+		tick.stop( ticker );
 
 		ticker.watch( cb2 );
 
@@ -28,7 +28,7 @@ test( 'tick returns a value in milliseconds', function( t ) {
 				t.fail( 'Should tick after start' );
 			}, 200 );
 
-			tick.start();
+			tick.start( ticker );
 		}, 200 );
 	};
 
@@ -45,7 +45,19 @@ test( 'tick returns a value in milliseconds', function( t ) {
 		clearTimeout( cb3Timeout );
 
 		ticker.unwatch( cb3 );
-		tick.stop();
+		tick.kill( ticker );
+
+		ticker.watch( cb4 );
+
+		setTimeout( function() {
+
+			t.pass( 'Didn\'t tick after kill' );
+		}, 200 );
+	};
+
+	var cb4 = function( value ) {
+
+		t.fail( 'Should\'t have run after stop call' );
 	};
 
 	ticker.watch( cb );

@@ -18,8 +18,8 @@ tick().watch( function( elapsed ) {
 	console.log( elapsed );
 });
 
-tick.stop(); // this will stop the Event from firing
-tick.start(); // this will start it up again 
+tick.stop( tick ); // this will stop the Event from firing
+tick.start( tick ); // this will start it up again 
 ```
 
 ## License
