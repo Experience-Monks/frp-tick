@@ -13,13 +13,16 @@ A function which will return an Event. The event will fire when requestAnimation
 ```javascript
 var tick = require( 'frp-tick' );
 
-tick().watch( function( elapsed ) {
+var event = tick(); // created a new requestAnimation loop
+
+event.watch( function( elapsed ) {
 	
 	console.log( elapsed );
 });
 
-tick.stop( tick ); // this will stop the Event from firing
-tick.start( tick ); // this will start it up again 
+tick.stop( event ); // this will stop the Event from firing
+tick.start( event ); // this will start it up again 
+tick.kill( event ); // this will stop the raf loop and clear all memory associated
 ```
 
 ## License
