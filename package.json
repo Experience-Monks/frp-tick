@@ -1,6 +1,6 @@
 {
   "name": "frp-tick",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "will return an Event. The event will fire when requestAnimationFrame evaluates. The event will return the difference in milliseconds since the last call.",
   "main": "index.js",
   "license": "MIT",
